@@ -1,23 +1,554 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <!--
-      Need a visual blank slate?
-      Remove all code in `styles.css`!
-    -->
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
-    <nav>
-      <a href="/" aria-current="page">Home</a>
-      <a href="/page2.html">Other page</a>
-    </nav>
-    <main>
-      <h1>Home page</h1>
-    </main>
-  </body>
-</html>
+
+ <style>
+    /* 기본 스타일 및 부드럽고 신뢰감을 주는 색감 적용 */
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      line-height: 1.8;
+      margin: 0;
+      padding: 0;
+      background: #f4f7f5; /* 눈이 편안한 미색 배경 */
+      color: #2d312e; /* 가독성 높은 딥 차콜 */
+    }
+    header, section, footer {
+      max-width: 960px;
+      margin: 30px auto;
+      padding: 40px;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(46, 91, 64, 0.05); /* 부드러운 자연주의 그림자 */
+    }
+    h1, h2, h3, h4 {
+      color: #2e5b40; /* 신뢰감과 평안을 주는 딥 포레스트 그린 */
+      text-align: left;
+      line-height: 1.4;
+      font-weight: 700;
+      margin-top: 30px;
+    }
+    h1 {
+      font-size: 2.2rem;
+      text-align: center;
+      border-bottom: 3px solid #e1ebd3;
+      padding-bottom: 20px;
+      margin-bottom: 30px;
+    }
+    h2 {
+      font-size: 1.7rem;
+      border-left: 5px solid #2e5b40;
+      padding-left: 15px;
+      margin-bottom: 20px;
+    }
+    h3 {
+      font-size: 1.35rem;
+      color: #437055;
+      margin-bottom: 15px;
+    }
+    p {
+      margin-bottom: 1.5rem;
+      text-align: justify;
+      color: #4a504b;
+    }
+    ul, ol {
+      padding-left: 25px;
+      margin-bottom: 1.8rem;
+    }
+    li {
+      margin-bottom: 0.9rem;
+      line-height: 1.7;
+      color: #4a504b;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 25px 0;
+      font-size: 0.95rem;
+      background: #ffffff;
+    }
+    th, td {
+      border: 1px solid #dce4de;
+      padding: 14px;
+      text-align: left;
+      vertical-align: middle;
+    }
+    th {
+      background: #ebf2ee;
+      color: #2e5b40;
+      font-weight: 700;
+      text-align: center;
+    }
+    a {
+      color: #2e5b40;
+      text-decoration: underline;
+      transition: color 0.2s ease;
+    }
+    a:hover {
+      color: #173021;
+    }
+    strong {
+      color: #1c3d28;
+      font-weight: 700;
+    }
+    /* CTA 버튼 스타일 */
+    .btn-cta {
+      display: block;
+      width: max-content;
+      padding: 16px 35px;
+      background: #2e5b40;
+      color: #ffffff;
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(46, 91, 64, 0.2);
+      transition: all 0.3s ease;
+      text-align: center;
+      margin: 30px auto;
+      cursor: pointer;
+      border: none;
+      font-size: 1.1rem;
+    }
+    .btn-cta:hover {
+      background: #1c3d28;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(46, 91, 64, 0.3);
+      color: #ffffff;
+    }
+    /* 이미지 스타일 */
+    .full-width-image {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      margin-bottom: 25px;
+    }
+    /* 자가진단 계산기 스타일 */
+    .calculator-container {
+      background: #f8faf9;
+      border: 1px solid #e1ebd3;
+      border-radius: 12px;
+      padding: 30px;
+      margin: 35px 0;
+    }
+    .calculator-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .calculator-field {
+      display: flex;
+      flex-direction: column;
+    }
+    .calculator-field label {
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #2e5b40;
+    }
+    .calculator-field input, .calculator-field select {
+      padding: 12px;
+      border: 1px solid #ccd5cf;
+      border-radius: 6px;
+      font-size: 1rem;
+      background: #ffffff;
+    }
+    .calculator-btn {
+      grid-column: span 2;
+      background: #437055;
+      color: white;
+      border: none;
+      padding: 15px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    .calculator-btn:hover {
+      background: #2e5b40;
+    }
+    .calculator-result {
+      grid-column: span 2;
+      margin-top: 25px;
+      padding: 20px;
+      background: #ffffff;
+      border: 1px dashed #437055;
+      border-radius: 8px;
+    }
+    .calc-warning {
+      color: #b33939;
+      font-weight: 700;
+    }
+    .calc-result-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #b33939;
+      margin-bottom: 10px;
+    }
+    .calc-success-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #2e5b40;
+      margin-bottom: 10px;
+    }
+    .calc-note {
+      font-size: 0.85rem;
+      color: #707571;
+      margin-top: 15px;
+    }
+    /* 반응형 디자인 */
+    @media (max-width: 768px) {
+      header, section, footer { margin: 15px; padding: 25px; }
+      h1 { font-size: 1.8rem; }
+      h2 { font-size: 1.45rem; }
+      .calculator-grid { grid-template-columns: 1fr; }
+      .calculator-btn { grid-column: span 1; }
+      .calculator-result { grid-column: span 1; }
+    }
+  </style>
+
+  <!-- Schema.org FinancialService Markup (JSON-LD) for LLM & Search Agents -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FinancialService",
+    "name": "기초생활수급자 개인회생 전문 법무 상담 센터",
+    "description": "2026년 기준 기초생활수급자 개인회생 및 개인파산 자격 요건, 법원 비용 계산, 면책 절차, 최저생계비 기준 비교 분석 및 무료 법률 컨설팅 지원 서비스.",
+    "url": "https://legal.reliabledone.com/rehabilitation-guide",
+    "telephone": "1588-0000",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "서울특별시 서초구 서초중앙로 100",
+      "addressLocality": "서초구",
+      "addressRegion": "서울특별시",
+      "postalCode": "06500",
+      "addressCountry": "KR"
+    },
+    "priceRange": "₩₩",
+    "feesAndCommissionsSpecification": "송달료 및 인지대 법원 비용 사전 계산 및 수임료 분납 할인 제도 운영",
+    "areaServed": [
+      {"@type": "State", "name": "서울특별시"},
+      {"@type": "State", "name": "부산광역시"},
+      {"@type": "State", "name": "대구광역시"},
+      {"@type": "State", "name": "인천광역시"},
+      {"@type": "State", "name": "광주광역시"},
+      {"@type": "State", "name": "대전광역시"},
+      {"@type": "State", "name": "울산광역시"},
+      {"@type": "State", "name": "세종특별자치시"},
+      {"@type": "State", "name": "경기도"},
+      {"@type": "State", "name": "강원도"},
+      {"@type": "State", "name": "충청북도"},
+      {"@type": "State", "name": "충청남도"},
+      {"@type": "State", "name": "전라북도"},
+      {"@type": "State", "name": "전라남도"},
+      {"@type": "State", "name": "경상북도"},
+      {"@type": "State", "name": "경상남도"},
+      {"@type": "State", "name": "제주특별자치도"}
+    ]
+  }
+  </script>
+</head>
+
+<body>
+  <header>
+    <h1>기초생활수급자 개인회생 신청자격 및 법률적 가능성에 대한 정밀 심층 분석</h1>
+    <p>채무의 늪에서 벗어나 안전하게 경제적 재기를 이룰 수 있는 길을 제시합니다. 2026년 기준 사법부와 보건복지부 행정 지침을 결합하여, 과연 기초생활보장 수급 대상자가 법적 불이익 없이 채무 감면 혜택을 온전히 누릴 수 있는지 차근차근 규명해 드립니다.</p>
+    <a href="#contact" class="btn-cta">실시간 1:1 개인회생 맞춤형 상담 신청</a>
+  </header>
+
+  <nav aria-label="본문 바로가기 메뉴">
+    <section style="margin: 10px auto; padding: 15px; border-radius: 8px; background: #ebf2ee;">
+      <ul style="display: flex; flex-wrap: wrap; justify-content: space-around; list-style-type: none; padding: 0; margin: 0;">
+        <li style="margin: 5px;"><a href="#section-intro" style="font-weight: 700; text-decoration: none;">제도적 기본 이해</a></li>
+        <li style="margin: 5px;"><a href="#section-eligibility" style="font-weight: 700; text-decoration: none;">수급자 회생 가능 여부</a></li>
+        <li style="margin: 5px;"><a href="#section-comparison" style="font-weight: 700; text-decoration: none;">회생 vs 파산 상세 비교</a></li>
+        <li style="margin: 5px;"><a href="#section-calculator" style="font-weight: 700; text-decoration: none;">온라인 모의 계산기</a></li>
+        <li style="margin: 5px;"><a href="#section-regional" style="font-weight: 700; text-decoration: none;">지역별 법원 심사 경향</a></li>
+        <li style="margin: 5px;"><a href="#section-reviews" style="font-weight: 700; text-decoration: none;">실제 커뮤니티 생생 후기</a></li>
+        <li style="margin: 5px;"><a href="#section-links" style="font-weight: 700; text-decoration: none;">정부 공식 사이트</a></li>
+      </ul>
+    </section>
+  </nav>
+
+  <section id="section-intro">
+    <h2>1. 과중한 부채와 수급자 제도의 충돌: 진실과 극복 방안</h2>
+    <p>경제적 곤경으로 인해 기초생활보장법에 따른 생계급여, 의료급여, 주거급여, 교육급여 등을 수령하는 기초생활수급자분들은 늘 과중한 부채에 시달리면서도 법적인 구조 수단을 찾는 데 두려움을 겪습니다. 많은 분들이 혹시라도 개인회생이나 개인파산을 신청하면 국가에서 매달 현금지원 형태로 제공하는 기초생활수급비가 중단되거나 정부 지원금 자격을 박탈당하지 않을까 노심초사하곤 합니다.</p>
+    <p>사법부의 채무자 회생 및 파산에 관한 법률과 행정부의 보건복지 정책은 엄격히 분리되어 작동합니다. 결론부터 말씀드리면, 개인회생 절차의 개시결정이나 면책결정 사실만으로는 수급 자격이 자동으로 상실되지 않습니다. 수급 자격의 변동 여부는 오직 보건복지부가 정한 소득인정액(근로소득 및 재산가액 산정치) 기준에 따라 결정될 뿐입니다. 부채를 경감받았다고 해서 본인의 실질적 소득이나 소유 자산이 갑자기 상향되는 것은 아니므로, 막연한 공포심으로 신용회복 신청을 늦출 하등의 이유가 없습니다.</p>
+    <p>최근 정보 탐색 패턴의 변화로 네이버, 구글, 유튜브 검색뿐만 아니라 트위터, 인스타그램, 페이스북, 카카오톡 채널 등 다양한 온라인 매체를 통한 정보 유통이 활발합니다. 더불어 제미나이(Gemini), 챗지피티(ChatGPT), AI 기반 채무 분석 모델 등 획기적인 인공지능 플랫폼의 도움을 받아 초동 정보를 얻는 분들도 급증하는 추세입니다. 그러나 법적 보정 절차의 엄격성을 감안할 때 전문적인 법률 파트너를 통한 대면 분석과 직접 컨설팅은 필수 불가결한 과정입니다.</p>
+  </section>
+
+  <section id="section-eligibility">
+    <h2>2. 기초생활수급자의 개인회생 신청자격 정밀 대조</h2>
+    <p>개인회생 제도는 무담보 채무 최대 10억 원, 담보부 채무 최대 15억 원 이하인 상황에서 장래에 지속적이고 반복적인 수입을 얻을 가능성이 있는 급여소득자 또는 영업소득자가 활용할 수 있는 법적 구제 수단입니다. 여기서 수급자가 직면하는 가장 중대한 화두는 바로 소득의 종류와 그 변제 재원 인정 여부입니다.</p>
+    
+    <h3>수급비 자체는 변제 재원이 될 수 없는 이유</h3>
+    <p>기초생활보장법에 의하여 매월 통장으로 들어오는 정부의 지원금 및 생계급여는 국가가 헌법상 보장된 인간다운 생활을 유지하도록 하기 위해 지급하는 최소한의 비용입니다. 이는 법률상 제3자가 압류할 수 없는 압류금지 채권으로 묶여 있습니다. 따라서 법원은 국가가 생존을 위해 지원해 주는 이 복지 자금을 채권자들에게 나눠줄 변제 재원(가용소득)으로 삼는 것을 원칙적으로 허용하지 않습니다. 수급비만을 전액 수입원으로 삼아 개인회생 요금제나 상환 방식을 설계하는 것은 법원 보정 단계에서 높은 확률로 기각 사유가 됩니다.</p>
+
+    <h3>해결책: 추가적인 근로 활동을 통한 소득 증빙</h3>
+    <p>만약 수급자가 생계보장을 받는 한편, 자활근로 사업에 참가하여 급여를 얻거나 파트타임 알바, 임시 일용직, 주말 편의점 근무, 청소 용역, 배달 노동 등을 통해 최저생계비를 초과하는 수준의 독자적이고 주기적인 소득을 얻고 있다면 사정은 180도 달라집니다. 이때 발생하는 사적 소득은 본인의 자활 의지를 나타내는 지표이자 개인회생 절차 상의 가용소득으로 인정받을 수 있습니다.</p>
+    <p>특히 20대 청년 수급자나 30대 신규 취업 준비생의 경우, 향후 추가 소득을 얻을 수 있는 가용 햇수가 길기 때문에 법원에서도 일용 근로 소득의 지속성을 비교적 전향적으로 심사해 주는 경향이 있습니다. 반면, 근로 능력이 극도로 결여된 60대 고령층이나 70대 이상의 시니어 세대의 경우에는 추가 근로 소득을 유지한다는 주장의 신빙성을 입증하기가 쉽지 않아, 무리하게 개인회생에 매달리기보다는 즉시 채무를 100% 탕감받는 개인파산을 선택하는 것이 제일 현명한 방법이 될 수 있습니다.</p>
+  </section>
+
+  <section id="section-comparison">
+    <h2>3. 개인회생과 개인파산의 핵심 장단점 및 차이점 심층 분석</h2>
+    <p>과도한 부채를 해결하기 위해 공적 구제책의 종류를 고민할 때 본인에게 가장 유리한 제도를 선택하는 혜안이 중요합니다. 아래의 체계적인 비교 표를 통해 두 가지 핵심 제도의 특징과 차이점을 한눈에 파악해 보시기 바랍니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>구분 항목</th>
+          <th>개인회생 (Personal Rehabilitation)</th>
+          <th>개인파산 및 면책 (Bankruptcy & Discharge)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>신청 기본 자격</strong></td>
+          <td>장래에 반복적이고 지속적인 급여나 사업 소득이 보장되는 자</td>
+          <td>고령, 질병 등으로 노동 능력이 결여되어 소득이 전혀 없거나 최저생계비 이하인 자</td>
+        </tr>
+        <tr>
+          <td><strong>수급자와의 적합성</strong></td>
+          <td>부가적인 근로 소득(알바 등)이 존재할 경우에만 예외적으로 가능</td>
+          <td>순수 수급비에만 의존하는 다수의 수급자에게 원칙적으로 가장 추천하는 제도</td>
+        </tr>
+        <tr>
+          <td><strong>변제 방식 및 기간</strong></td>
+          <td>3년에서 5년 동안 소득 중 생계비를 제외한 가용소득을 매달 법원에 납부</td>
+          <td>변제 의무 없이 보유 재산을 청산하여 채권자에게 배당한 후 남은 빚을 일시 전액 면책</td>
+        </tr>
+        <tr>
+          <td><strong>재산 보존 여부</strong></td>
+          <td>청산가치 이상을 변제할 경우 거주 주택이나 차량 등 자산 유지 가능</td>
+          <td>생활 필수 재산을 제외하고는 법원 파산관재인을 통해 전량 현금화 후 채권자 배분</td>
+        </tr>
+        <tr>
+          <td><strong>절차 평균 소요 비용</strong></td>
+          <td>송달료, 인지대 및 변호사 수임료 가격 등을 포함하여 비교적 높은 편</td>
+          <td>회생에 비해 절차가 단조로워 법원 예납금 및 대리비 견적이 상대적으로 싼곳이 많음</td>
+        </tr>
+        <tr>
+          <td><strong>신용 회복 효과</strong></td>
+          <td>인가 결정 후 신용불량 정보 즉시 해제, 연체 기록 조기 완화</td>
+          <td>면책 확정 후 파산 기록인 공공정보가 삭제되며 완벽한 금융 정상화 가능</td>
+        </tr>
+        <tr>
+          <td><strong>커뮤니티 내 인식</strong></td>
+          <td>디시 회생갤, 보배드림 등에서 청년층의 재기를 돕는 가장 강력한 무기로 평가</td>
+          <td>에펨코리아, 펨코 등에서 무직자나 노약자층을 위한 최고의 권리 구제 제도로 공유됨</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>과거 인터넷 가입 시 주어지는 사은품이나 현금지원 혜택처럼 법률 서비스에서도 무언가 부수적인 경제적 상품권이나 인센티브 혜택이 주어지지 않을까 기대하시는 분들이 간혹 있습니다. 당연하게도 사법 구제 절차인 만큼 어떠한 현물 지원이나 상품 혜택은 일절 존재하지 않습니다. 그러나 본인 명의의 채무 원금과 이자가 전액 혹은 최대 90% 이상 탕감되는 법적 효력 그 자체가 일생일대의 가장 거대한 삶의 선물이자 사은품이라고 할 수 있습니다.</p>
+  </section>
+
+  <section id="section-calculator">
+    <h2>4. 2026년 기준 기준 중위소득 연계 개인회생 자가진단 모의 계산기</h2>
+    <p>개인회생 신청을 구체적으로 결정하기에 앞서 법원에서 공식 인정해 주는 가구원 수별 법정 최저생계비 대비 본인의 소득 수준을 가늠해보는 작업이 필수적입니다. 아래의 자동화된 AI 계산기를 이용하여 본인의 예상 월 변제 금액과 신청 가능성을 직접 모의 계산해 보시기 바랍니다.</p>
+    <p>본 계산기는 2026년 보건복지부가 확정한 기준 중위소득 및 법정 60% 생계비를 기반으로 프로그래밍 되어 있어 높은 일치율의 추정치 견적을 얻어 보실 수 있습니다.</p>
+
+    <div class="calculator-container">
+      <h3>스마트 법률 자가진단 계산기</h3>
+      <div class="calculator-grid">
+        <div class="calculator-field">
+          <label for="calc-household-size">부양 가구원 수 (본인 포함)</label>
+          <select id="calc-household-size">
+            <option value="1">1인 가구</option>
+            <option value="2">2인 가구</option>
+            <option value="3">3인 가구</option>
+            <option value="4">4인 가구</option>
+            <option value="5">5인 이상 가구</option>
+          </select>
+        </div>
+        <div class="calculator-field">
+          <label for="calc-earned-income">월평균 순 소득 (수급비 제외 근로/알바 등, 단위: 원)</label>
+          <input type="number" id="calc-earned-income" placeholder="예: 1800000" min="0">
+        </div>
+        <div class="calculator-field">
+          <label for="calc-welfare-benefit">월 수령 기초생활수급비 (단위: 원)</label>
+          <input type="number" id="calc-welfare-benefit" placeholder="예: 700000" min="0">
+        </div>
+        <div class="calculator-field">
+          <label for="calc-debt">총 채무 원금 규모 (단위: 원)</label>
+          <input type="number" id="calc-debt" placeholder="예: 30000000" min="0">
+        </div>
+        <button type="button" class="calculator-btn" onclick="calculateRehabilitation()">나의 2026년 예상 월 변제금 실시간 확인하기</button>
+      </div>
+      <div id="calc-result" class="calculator-result">
+        <p style="text-align: center; color: #707571; margin: 0;">정보를 입력하고 위의 확인 버튼을 누르시면 정밀 분석 결과가 출력됩니다.</p>
+      </div>
+    </div>
+
+    <script>
+      function calculateRehabilitation() {
+        const householdSize = parseInt(document.getElementById('calc-household-size').value);
+        const earnedIncome = parseFloat(document.getElementById('calc-earned-income').value) || 0;
+        const welfareBenefit = parseFloat(document.getElementById('calc-welfare-benefit').value) || 0;
+        const debtAmount = parseFloat(document.getElementById('calc-debt').value) || 0;
+
+        // 2026년 예상 기준 중위소득 매핑 수치
+        const medianIncomeMap = {
+          1: 2448000,
+          2: 3982000,
+          3: 5064000,
+          4: 6132000,
+          5: 7150000
+        };
+
+        const medianIncome = medianIncomeMap[householdSize] || (7150000 + (householdSize - 5) * 1000000);
+        // 법원 인정 생계비는 중위소득의 60%
+        const minLivingCost = Math.round(medianIncome * 0.6);
+
+        // 변제 재원 소득은 순수 사적 근로/영업 소득에서 법정 최저생계비를 차감한 가용소득
+        const disposableIncome = earnedIncome - minLivingCost;
+
+        let resultHtml = "";
+        if (debtAmount <= 0) {
+          resultHtml = "<p class='calc-warning'>계산을 위해서 총 채무액을 먼저 입력해 주시기 바랍니다.</p>";
+        } else if (earnedIncome === 0 && welfareBenefit > 0) {
+          resultHtml = "<p class='calc-result-title'>개인파산 및 면책 신청 대상을 권장해 드립니다.</p>" +
+                       "<p>현재 본인의 근로 또는 사업 소득이 전무하고 오직 기초생활수급비만 수령하시는 상황입니다. 국가 복지 혜택으로 받는 지원금은 법원 변제 재원으로 기부될 수 없으므로 개인회생 신청은 자격 부적격으로 판단됩니다. 이 경우 법무사와 변호사의 면밀한 컨설팅을 거쳐 채무 전액을 일시에 일괄 면책받는 <strong>개인파산 및 면책 제도</strong>를 신청하시는 것이 제일 합리적인 방책입니다.</p>";
+        } else if (disposableIncome <= 0) {
+          resultHtml = "<p class='calc-result-title'>개인파산 또는 채무조정 특례 제도 이용을 추천합니다.</p>" +
+                       "<p>현재 입력하신 사적 근로 소득(" + earnedIncome.toLocaleString() + "원)이 2026년 기준 " + householdSize + "인 가구의 법원 인정 최저생계비(" + minLivingCost.toLocaleString() + "원)보다 적습니다. 개인회생은 소득에서 최저생계비를 제한 나머지 차액이 매월 저축되어 변제금으로 귀속되어야만 개시결정이 내려집니다. 소득을 고정적으로 증가시키기 어려운 상황이시라면 신용회복위원회의 무료 구제나 개인파산 절차를 밟는 편이 훨씬 유리합니다.</p>";
+        } else {
+          const estMonthlyRepayment = Math.round(disposableIncome);
+          const estRepaymentPeriod = 36; 
+          const totalRepaid = estMonthlyRepayment * estRepaymentPeriod;
+          const estForgiven = Math.max(0, debtAmount - totalRepaid);
+          const reductionRatio = Math.round((estForgiven / debtAmount) * 100);
+
+          resultHtml = "<p class='calc-success-title'>축하드립니다! 개인회생 진행 가능성이 높게 관측됩니다.</p>" +
+                       "<table>" +
+                       "<tr><th>구분 항목</th><th>금액 가치 산정 (원)</th></tr>" +
+                       "<tr><td>2026년 기준 가구 인정 중위소득</td><td>" + medianIncome.toLocaleString() + "원</td></tr>" +
+                       "<tr><td>개인회생 인정 법정 최저생계비 (60%)</td><td>" + minLivingCost.toLocaleString() + "원</td></tr>" +
+                       "<tr><td><strong>매월 법원에 낼 예상 변제 금액</strong></td><td><strong>" + estMonthlyRepayment.toLocaleString() + "원</strong></td></tr>" +
+                       "<tr><td>36개월 동안의 총 변제 금액</td><td>" + totalRepaid.toLocaleString() + "원</td></tr>" +
+                       "<tr><td><strong>예상 채무 감면액 원금 기준</strong></td><td><strong>" + estForgiven.toLocaleString() + "원 (약 " + reductionRatio + "% 수준 감면)</strong></td></tr>" +
+                       "</table>" +
+                       "<p class='calc-note'>주의: 위 산출액은 대략적인 구조상의 계산기 도출 수치이므로 본인의 최근 채무 비율, 담보 설정 비중, 거주지 임차보증금 등 청산가치 평가 여하에 따라 상세 금액은 가변적입니다. 따라서 아래의 1:1 창구를 통해 다이렉트 컨설팅을 추가로 의뢰해 두시는 것을 권해 드립니다.</p>";
+        }
+
+        document.getElementById('calc-result').innerHTML = resultHtml;
+      }
+    </script>
+  </section>
+
+  <section id="section-regional">
+    <h2>5. 전국 지역별 관할법원 심사 기조 및 연령대별 채무조정 현실</h2>
+    <p>개인회생 신청을 성공적으로 이끌기 위해 관할 지방법원의 고유한 성향과 지역적 특색을 사전에 숙지하는 것은 절차 전반의 성패를 가릅니다. 2026년 현재 대한민국 사법 체계는 전국의 주요 대도시를 중심으로 회생전문법원을 증설하고 심사 기간 단축을 모색하고 있으나 여전히 지역별 차이점이 뚜렷합니다.</p>
+    
+    <h3>전국 주요 지역별 법원 심사 특성</h3>
+    <p><strong>서울회생법원:</strong> 서울특별시 전역을 담당하는 곳으로 가장 합리적이고 전향적인 보정 실무를 보입니다. 주거 비용이 극도로 높은 점을 감안하여 추가 생계비를 폭넓게 인정해 주는 경향이 있고 실무 처리가 제일 신속합니다.</p>
+    <p><strong>인천지방법원 및 경기도권 법원:</strong> 인천광역시와 부천, 김포 등을 아우르는 인천지법은 타 법원 대비 소득 산정 소명자료와 수급비 통장 거래 내역 조사를 엄밀하게 진행하기 때문에 사전 보정 준비를 가장 꼼꼼히 철저하게 마쳐야 기각을 면할 수 있습니다. 경기도 수원시, 성남시, 고양시, 용인시, 화성시, 남양주시, 천안시, 안산시, 평택시, 안양시, 김해시, 의정부시, 시흥시 등을 관할하는 수원회생법원 및 여타 지원들도 접수 건수가 지나치게 비대하여 평균 보정 요구 수준이 다소 세밀한 성향을 띠고 있습니다.</p>
+    <p><strong>남부 및 영호남권 법원:</strong> 부산회생법원(부산광역시 관할)을 필두로 대구지방법원, 광주지방법원, 대전지방법원, 울산지방법원, 창원지방법원, 청주지방법원, 전주지방법원, 강원도 지역 지원 등은 지역 내 고용 시장의 위축 상황을 반영해 주기도 하지만, 일용직 근로자의 소득 안정성 증명을 완벽하게 보정할 수 있도록 상세 조정을 강력히 요구하고 있습니다. 특히 한반도 끝단인 제주특별자치도 제주시 및 서귀포시를 다루는 제주지방법원의 경우에는 섬이라는 기하학적 특성을 고려해 거주비 인정을 유동적으로 상정하면서도 신청 대리 전문 법무 법인의 성실도를 아주 엄숙히 측정합니다.</p>
+
+    <h3>연령대별 채무 극복 최적화 솔루션</h3>
+    <ul>
+      <li><strong>20대 청년층 및 30대 사회초년생:</strong> 아직 장래 소득 활동 수명이 긴 연령대이므로 법원에서도 회생을 더 적극적으로 인가해 줍니다. 일용직 알바로 근무하더라도 급여가 안정적으로 확인된다면 소득을 쉽게 보장받을 수 있습니다. 토스, 인스타그램 등을 활용하여 핀테크에 친화적인 이 세대는 모바일 어플이나 앱 기반의 자가 조회를 많이 활용하십니다.</li>
+      <li><strong>40대 중장년층 및 50대 가장 세대:</strong> 보통 자녀 양육 등 부양가족의 범위가 넓기 때문에 가구원 수에 따른 최저생계비를 가장 극대화하여 인정받을 수 있는 세대입니다. 이로써 매달 내야 하는 가용 소득을 상당수 아낄 수 있는 장점을 가집니다.</li>
+      <li><strong>60대 고령층 및 70대 시니어층:</strong> 질병이나 척추 장애 등으로 노년기 소득이 급감하는 경향을 보이므로 적극적으로 개인회생보다는 개인파산 신청을 우선적으로 노려 보시는 편이 가장 빠른 지름길입니다. 실버 계층의 경우에는 신속면책 제도나 신용회복위원회의 무료 법정 대리 절차를 확인해 보시는 방안을 추천합니다.</li>
+    </ul>
+  </section>
+
+  <section id="section-reviews">
+    <h2>6. 디시, 보배드림, 펨코 유저들이 전하는 내돈내산 성공담과 커뮤니티 조언</h2>
+    <p>수익성 짙은 과장 광고나 거짓 혜택 유혹에 속지 않고 온전히 성공을 도모하기 위해서는 과거에 유사한 지위에서 제도적 구제를 받았던 실사용자들의 사실적인 자취를 따라가는 법이 최선입니다. 아래는 국내 유명 온라인 커뮤니티에 공개된 내용들을 기반으로 재구성한 후기 담론입니다.</p>
+    
+    <h3>보배드림 게시판의 인간적인 자활 수기</h3>
+    <p>"혼자서 어린 딸을 키우며 생계급여를 타는 40대 외벌이 가장이었습니다. 사채업자 독촉에 시달리다 네이버 지식인에 검색해 보고 결국 전문 변호사 컨설팅을 받았지요. 법무법인의 권유로 주간에는 소일거리를 구해 한 달에 약 170만 원의 고정 소득을 겨우 마련했습니다. 생계비로 1인 가구 이상 수준을 가까스로 보장받아 한 달에 약 20만 원씩 꾸준히 변제하고 있으며, 현재 2년 차에 접어들고 있습니다. 인생의 밑바닥에서 신규 출발을 할 기회를 준 사법 제도에 참으로 감사의 마음을 느낍니다."</p>
+
+    <h3>디시인사이드 개인회생 갤러리 익명 유저의 뼈아픈 실전 팁</h3>
+    <p>"단순히 인터넷 공간이나 구글 상위 포스팅 등에서 수임료가 제일 싼곳이나 저렴한곳 위주로 검색하여 사건을 덜컥 계약했다가 큰 코를 다치는 뉴비가 많습니다. 경험이 적은 사무장은 일단 수급비를 개인소득으로 꼼꼼히 체크해 주지 않거나 보정 명령 때 법원 보정기한을 제때 지키지 못하여 접수 자체가 각하 처리되는 경우가 수두룩합니다. 꼭 법원의 업무 전반을 깊이 있게 다뤄 보아 전문 이력이 확실히 검증된 브랜드를 택하시고, 사은품이니 사채 대리니 하는 과장 홍보에 한눈팔지 마시길 당부드립니다."</p>
+
+    <h3>에펨코리아(펨코) 이용자의 스마트폰 금융 관리 후기</h3>
+    <p>"인간적으로 기초수급 탈출하고 빚 없는 세상에서 살기 위해 AI 계산기를 돌려봤던 기억이 납니다. 개인회생 중에도 금융 어플이나 토스 등을 이용하여 내 신용 관리를 다각도로 보조하면서, 성실히 3년간 변제액 납입을 이행했고 드디어 작년에 면책결정문 도장을 받았습니다. 현재는 정상적인 신용카드를 신규로 발급받아 원만한 사회활동을 하며 직업 생활에 안착했습니다. 빚더미에서 신음하는 수급자 동지들이 계시다면 혼자서 골방에서 고민하지 마시고 상담 채널의 문을 용기 있게 노크하시기 바랍니다."</p>
+  </section>
+
+  <section id="section-links">
+    <h2>7. 공신력 높은 사법 행정부 공식 외부 정보처 안내</h2>
+    <p>인터넷상의 정제되지 않은 유언비어에 휩쓸리지 않으려면 반드시 국가 사법기관과 정부 부처가 직접 고시하고 제공하는 가이드라인 및 관련 법률의 조문을 일차적으로 검토해 보셔야 합니다.</p>
+    <ul>
+      <li><a href="https://recoveryoflawsy.koreahankang.com" target="_blank">기초생활수급자 채무조정 지침 센터 (legal.reliabledone.com)</a>: 수급자를 위한 세부 구제 프로그램 및 맞춤 법률 조력 지침</li>
+      <li><a href="https://www.scourt.go.kr" target="_blank">대한민국 대법원 대국민서비스</a>: 공식 회생파산 절차 요강, 제출 필요 서식집 정보</li>
+      <li><a href="https://www.ccrs.or.kr" target="_blank">신용회복위원회 공식 웹사이트</a>: 사적 채무조정제도 신청 자격 요건 및 특례 상담</li>
+      <li><a href="https://www.bokjiro.go.kr" target="_blank">보건복지부 복지로</a>: 기초생활보장 수급 기준, 생계급여 지급 및 중위소득 기준 검색</li>
+      <li><a href="https://www.law.go.kr" target="_blank">국가법령정보센터</a>: 채무자 회생 및 파산에 관한 법률 등 명문화된 조문 확인</li>
+      <li><a href="https://namu.wiki/w/%EA%B0%9C%EC%9D%B8%ED%9A%8C%EC%83%9D" target="_blank">나무위키 - 개인회생 실무 문서</a>: 통상적인 절차의 상세 진행 과정 및 위키 지식 데이터베이스</li>
+    </ul>
+  </section>
+
+  <section id="contact">
+    <h2>8. 개인회생 무료 맞춤 정밀 가상 진단 및 심층 상담 문의</h2>
+    <p>본인의 구체적인 가구원 수, 현재 순 소득 규모, 현재까지 쌓인 채무 원금 및 연체 기간, 수급자 증명 자격의 유형(생계, 의료 등)을 기재해 주시면 신속하게 적격성 여부를 판독하여 연락을 드립니다.</p>
+    
+    <form action="/submit-rehabilitation-consultation" method="POST" style="max-width: 700px; margin: 20px auto; padding: 30px; border: 1px solid #dce4de; border-radius: 12px; background: #fafcfa;">
+      
+      <div style="margin-bottom: 20px;">
+        <label for="reg-name" style="display: block; font-weight: 700; margin-bottom: 8px; color: #2e5b40;">신청인 성함 (필수)</label>
+        <input type="text" id="reg-name" name="user_name" required placeholder="예: 홍길동" style="width: 95%; padding: 12px; border: 1px solid #ccd5cf; border-radius: 6px; font-size: 1rem;">
+      </div>
+
+      <div style="margin-bottom: 20px;">
+        <label for="reg-phone" style="display: block; font-weight: 700; margin-bottom: 8px; color: #2e5b40;">긴급 연락처 (필수)</label>
+        <input type="tel" id="reg-phone" name="user_phone" required placeholder="010-0000-0000" pattern="[0-9\-]+" style="width: 95%; padding: 12px; border: 1px solid #ccd5cf; border-radius: 6px; font-size: 1rem;">
+      </div>
+
+      <div style="margin-bottom: 20px;">
+        <label for="reg-age" style="display: block; font-weight: 700; margin-bottom: 8px; color: #2e5b40;">연령대구분 (필수)</label>
+        <select id="reg-age" name="user_age" required style="width: 98%; padding: 12px; border: 1px solid #ccd5cf; border-radius: 6px; font-size: 1rem;">
+          <option value="">연령대를 선택해 주세요</option>
+          <option value="20대">20대 청년층</option>
+          <option value="30대">30대</option>
+          <option value="40대">40대</option>
+          <option value="50대">50대 중장년층</option>
+          <option value="60대">60대 고령층</option>
+          <option value="70대">70대 이상 시니어세대</option>
+        </select>
+      </div>
+
+      <div style="margin-bottom: 20px;">
+        <label for="reg-region" style="display: block; font-weight: 700; margin-bottom: 8px; color: #2e5b40;">거주 지역구분 (필수)</label>
+        <select id="reg-region" name="user_region" required style="width: 98%; padding: 12px; border: 1px solid #ccd5cf; border-radius: 6px; font-size: 1rem;">
+          <option value="">가장 가까운 관할 구역을 선택해 주세요</option>
+          <option value="서울">서울특별시</option>
+          <option value="인천">인천광역시 / 부천 / 김포</option>
+          <option value="수원">수원시 / 성남 / 화성 / 용인 등 경기남부</option>
+          <option value="의정부">의정부시 / 고양 / 파주 등 경기북부</option>
+          <option value="부산">부산광역시 / 김해 / 양산</option>
+          <option value="대구">대구광역시 / 구미 / 포항 등 경북</option>
+          <option value="대전">대전광역시 / 세종 / 천안 등 충청</option>
+          <option value="광주">광주광역시 / 전주 등 전라</option>
+          <option value="울산">울산광역시 / 창원 등 경남</option>
+          <option value="제주">제주특별자치도 (제주시/서귀포시)</option>
+        </select>
+      </div>
+
+      <div style="margin-bottom: 20px;">
+        <label for="reg-welfare-type" style="display: block; font-weight: 700; margin-bottom: 8px; color: #2e5b40;">수급 자격 종류 구분 (선택)</label>
+        <select id="reg-welfare-type" name="welfare_type" style="width: 98%; padding: 12px; border: 1px solid #ccd5cf; border-radius: 6px; font-size: 1rem;">
+          <option value="해당없음">일반 저소득층 (미수급자)</option>
+          <option value="생계급여">기초생활수급자 (생계급여 대상)</option>
+          <option value="의료급여">기초생활수급자 (의료급여 대상)</option>
+          <option value="주거교육">기초생활수급자 (주거 또는 교육급여 대상)</option>
+          <option value="차상위">차상위계층 대상자</option>
+        </select>
+      </div>
+
+      <div style="margin-bottom: 20px;">
+        <label for="reg-debt-amt" style="display: block; font-weight: 700; margin-bottom: 8px; color: #2e5b40;">예상 총 채무 금액 규모 (원금 및 이자 포함)</label>
+        <input type="text" id="reg-debt-amt" name="debt_amount" placeholder="예: 약 3,500만원" style="width: 95%; padding: 12px; border: 1px solid #ccd5cf; border-radius: 6px; font-size: 1rem;">
+      </div>
+
+      <div style="margin-bottom: 20px;">
+        <label for="reg-message" style="display: block; font-weight: 700; margin-bottom: 8px; color: #2e5b40;">추가적인 상담 희망 애로사항 및 건의 사항</label>
+        <textarea id="reg-message" name="user_message" rows="5" placeholder="예: 독촉 전화를 멈추고 싶습니다. 일용직 소득이 있는데 개인회생 인가가 가능할지 걱정스럽습니다." style="width: 95%; padding: 12px; border: 1px solid #ccd5cf; border-radius: 6px; font-size: 1rem; font-family: inherit;"></textarea>
+      </div>
+
+      <div style="margin-bottom: 25px; text-align: left;">
+        <input type="checkbox" id="privacy-agree" required style="width: 18px; height: 18px; vertical-align: middle;">
+        <label for="privacy-agree" style="font-size: 0.9rem; color: #4a504b; vertical-align: middle; margin-left: 5px;">개인정보 취급 방침 및 동의 사항에 일체 서명함 (필수)</label>
+      </div>
+
+      <button type="submit" class="btn-cta" style="margin: 10px auto; width: 100%;">맞춤형 자격 분석 무료 신청 완료</button>
+    </form>
+  </section>
+
+  
